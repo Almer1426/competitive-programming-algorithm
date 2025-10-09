@@ -2,6 +2,7 @@
 using namespace std;
 
 int main() {
+    // one based
     vector<int> a({1, 3, 3, 1, 2, 6});
     int n = a.size();
 
