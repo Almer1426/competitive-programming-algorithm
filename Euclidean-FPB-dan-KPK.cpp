@@ -6,12 +6,15 @@ int fpb(int a, int b) {
     else return fpb(b, a % b);
 }
 
+int kpk(int a, int b) {
+    return a * (b / fpb(a, b));
+}
+
 int main() {
     int x, y;
     cin >> x >> y;
 
-    int ans = fpb(x, y);
-    cout << ans << endl;
+    cout << fpb(x, y) << " " << kpk(x, y) << endl;
 
     return 0; 
 }
