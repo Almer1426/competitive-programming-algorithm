@@ -1,42 +1,67 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-vector<int> par;
+struct DSU {
+    vector<int> parent, size;
 
-void initialize(int n) {
-    par.resize(n);
-
-    for(int i = 0; i < n; i++) { // zero based
-        par[i] = i;
+    DSU(int n) {
+        parent.resize(n);
+        size.assign(n, 1);
+        iota(parent.begin(), parent.end(), 0);
     }
 
-    return;
-}
-
-void join(int a, int b) {
-    int repA = findRepresentative(a);
-    int repB = findRepresentative(b);
-    par[repA] = repB;
-}
-
-int findRepresentative(int x) {
-    if(par[x] == x) {
-        return x;
-    } else {
-        par[x] = findRepresentative(par[x]);
-        return par[x];
+    int find(int x) {
+        if(parent[x] == x) return x;
+        return parent[x] = find(parent[x]);
     }
-}
 
-bool check(int a, int b) {
-    return (findRepresentative(a) == findRepresentative(b));
-}
+    bool unite(int a, int b) {
+        a = find(a);
+        b = find(b);
+        if(a == b) return false;
+
+        if(size[a] < size[b]) swap(a, b);
+        parent[b] = a;
+        size[a] += b;
+
+        return true;
+    }
+
+    bool same(int a, int b) {
+        return find(a) == find(b);
+    }
+
+    int componentSize(int x) {
+        return size[x];
+    }
+};
 
 int main() {
-    int n;
-    cin >> n; // banyak data
+    int n, q;
+    cin >> n >> q;
 
-    initialize(n);
+    DSU dsu(n);
+
+    while (q--) {
+        string type;
+        cin >> type;
+        
+        if (type == "union") {
+            int a, b;
+            cin >> a >> b;
+            dsu.unite(a, b);
+        }
+        else if (type == "check") {
+            int a, b;
+            cin >> a >> b;
+            cout << (dsu.same(a, b) ? "YES\n" : "NO\n");
+        }
+        else if (type == "size") {
+            int a;
+            cin >> a;
+            cout << dsu.componentSize(a) << "\n";
+        }
+    }
 
     return 0;
 }
