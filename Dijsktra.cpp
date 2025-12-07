@@ -22,7 +22,7 @@ signed main() {
     pq.push({0, 1}); // {jarak, node}
 
     while(!pq.empty()) {
-        auto [d, u] = pq.top();
+        auto [d, u] = pq.top(); 
         pq.pop();
 
         if(d > dist[u]) continue;
@@ -42,17 +42,3 @@ signed main() {
 
     return 0;
 }
-
-/*
-
-6 8
-1 3 2
-3 4 1
-4 6 1
-1 2 10
-2 5 1
-3 5 10
-4 5 50
-5 6 0
-
-*/
